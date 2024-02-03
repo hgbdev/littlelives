@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Controller,
   Delete,
   FileTypeValidator,
@@ -65,6 +66,14 @@ export class FileController {
     const quota = await this.userService.checkQuota(file.size, username);
     if (!quota) {
       throw new BadRequestException('Quota exceeded');
+    }
+
+    const fileExists = await this.fileService.getPublicFile(
+      file.originalname,
+      username,
+    );
+    if (fileExists) {
+      throw new ConflictException('File already exists');
     }
 
     const uploadResult = await this.fileService.uploadPublicFile(
