@@ -2,6 +2,20 @@
 
 Design a File Monitoring Service
 
+## Description
+
+Design a comprehensive file monitoring service that empowers users to seamlessly upload files to Amazon S3 while enforcing limited quotas per user. This service continuously monitors users' file uploads, verifies their quota usage, and prevents uploads exceeding their allocated quota. Robust authentication and authorization layers are implemented using JWT, Guards, and Middleware to ensure secure operations. Employ `class-validator` for data validation, limiting file size and type.
+
+An admin user with privileged access can adjust user quotas, providing flexibility and control.
+
+Additionally, integrate Swagger API documentation for a user-friendly and interactive API exploration experience. Swagger Documentation URL: <http://localhost:3000/swagger>
+
+**Deployment Information:**
+
+I've deployed the service on Railway for easy remote access and testing. You can explore and interact with the API through Swagger at the following URL:
+
+Railway URL: [https://littlelives-hgb.up.railway.app/swagger](https://littlelives-hgb.up.railway.app/swagger)
+
 ## Technology and Frameworks Used
 
 ### NestJS
@@ -19,14 +33,6 @@ Learn more: [Prisma Documentation](https://www.prisma.io/)
 ### PostgreSQL
 
 Utilize PostgreSQL, running seamlessly with Docker, to store and manage data efficiently.
-
-## Description
-
-Design a comprehensive file monitoring service that empowers users to seamlessly upload files to Amazon S3 while enforcing limited quotas per user. This service continuously monitors users' file uploads, verifies their quota usage, and prevents uploads exceeding their allocated quota. Robust authentication and authorization layers are implemented using JWT, Guards, and Middleware to ensure secure operations. Employ `class-validator` for data validation, limiting file size and type.
-
-An admin user with privileged access can adjust user quotas, providing flexibility and control.
-
-Additionally, integrate Swagger API documentation for a user-friendly and interactive API exploration experience. Swagger Documentation URL: <http://localhost:3000/swagger>
 
 ## API Endpoints
 
@@ -75,14 +81,14 @@ Follow these steps to set up and run the Little Lives File Monitoring Service lo
 
 ### Create an S3 Bucket
 
-Create an S3 bucket with public ACL settings on your preferred cloud provider. Ensure that you have the necessary credentials and access rights.
+Create an S3 bucket with public ACL settings. Ensure that you have the necessary credentials and access rights.
 
 ### Configure Environment Variables
 
 Create a `.env` file at the root of your project and fill in the following information:
 
 ```env
-DATABASE_URL="postgresql://postgres:abc123@localhost:5432/littlelives-test?schema=public"
+DATABASE_URL=postgresql://postgres:abc123@localhost:5432/littlelives-test?schema=public
 AWS_BUCKET_NAME=your-s3-bucket-name
 AWS_ACCESS_ID=your-aws-access-id
 AWS_SECRET_KEY=your-aws-secret-key
