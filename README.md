@@ -1,6 +1,6 @@
 # Little Lives File Monitoring Service
 
-Design an Advanced File Monitoring Service
+Design a File Monitoring Service
 
 ## Technology and Frameworks Used
 
@@ -26,7 +26,7 @@ Design a comprehensive file monitoring service that empowers users to seamlessly
 
 An admin user with privileged access can adjust user quotas, providing flexibility and control.
 
-Additionally, integrate Swagger API documentation for a user-friendly and interactive API exploration experience. Swagger Documentation URL: http://localhost:3000/swagger
+Additionally, integrate Swagger API documentation for a user-friendly and interactive API exploration experience. Swagger Documentation URL: <http://localhost:3000/swagger>
 
 ## API Endpoints
 
@@ -63,3 +63,55 @@ Additionally, integrate Swagger API documentation for a user-friendly and intera
 
 - **DELETE /file/{filename}**
   - Description: Delete a specific file identified by its filename.
+
+## Setup and Run Locally
+
+Follow these steps to set up and run the Little Lives File Monitoring Service locally on your machine.
+
+### Prerequisites
+
+- Node.js 18+ installed on your system.
+- Yarn package manager installed.
+
+### Create an S3 Bucket
+
+Create an S3 bucket with public ACL settings on your preferred cloud provider. Ensure that you have the necessary credentials and access rights.
+
+### Configure Environment Variables
+
+Create a `.env` file at the root of your project and fill in the following information:
+
+```env
+DATABASE_URL="postgresql://postgres:abc123@localhost:5432/littlelives-test?schema=public"
+AWS_BUCKET_NAME=your-s3-bucket-name
+AWS_ACCESS_ID=your-aws-access-id
+AWS_SECRET_KEY=your-aws-secret-key
+```
+
+Replace placeholders (`your-s3-bucket-name`, `your-aws-access-id`, and `your-aws-secret-key`) with your actual S3 bucket details and AWS credentials.
+
+### Install Dependencies
+
+Run the following command to install project dependencies:
+
+```bash
+yarn
+```
+
+### Generate Schema and Sync Database
+
+Use the following command to generate the Prisma schema and sync the database:
+
+```bash
+yarn db
+```
+
+### Run in Development Mode
+
+Start the development server with the following command:
+
+```bash
+yarn dev
+```
+
+Your Little Lives File Monitoring Service should now be running locally. Access Swagger API documentation at [http://localhost:3000/swagger](http://localhost:3000/swagger) to explore and test the API endpoints.
