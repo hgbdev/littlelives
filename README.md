@@ -120,4 +120,6 @@ Start the development server with the following command:
 yarn dev
 ```
 
+The admin account after run init is `admin` / `admin`
+
 Your Little Lives File Monitoring Service should now be running locally. Access Swagger API documentation at [http://localhost:3000/swagger](http://localhost:3000/swagger) to explore and test the API endpoints.
