@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NestMiddleware,
-} from '@nestjs/common';
+import { ConflictException, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { FileService } from './file.service';
 import { JwtService } from '@nestjs/jwt';
@@ -30,7 +26,7 @@ export class CheckDuplicateFileMiddleware implements NestMiddleware {
     const file = this.fileService.getPublicFile(filename, username);
 
     if (file) {
-      throw new BadRequestException('File already exists');
+      throw new ConflictException('File already exists');
     }
     next();
   }

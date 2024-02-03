@@ -58,7 +58,7 @@ export class FileController {
     @Req() req: any,
   ) {
     if (!file) {
-      throw new BadRequestException('File not found');
+      throw new NotFoundException('File not found');
     }
 
     const username = req.user.username;
@@ -74,7 +74,7 @@ export class FileController {
       file.size,
     );
     if (!uploadResult) {
-      throw new BadRequestException('Failed to upload file');
+      throw new BadRequestException('Failed to upload file, please try again');
     }
 
     await this.userService.increaseUsage(username, file.size);
@@ -105,7 +105,7 @@ export class FileController {
     const username = req.user.username;
     const file = await this.fileService.deletePublicFile(filename, username);
     if (!file) {
-      throw new BadRequestException('Failed to delete file');
+      throw new NotFoundException('Failed to delete file, file not found');
     }
 
     await this.userService.decreaseUsage(username, file.size);

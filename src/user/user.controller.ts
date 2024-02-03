@@ -1,10 +1,13 @@
 import {
   BadRequestException,
   Body,
+  ConflictException,
   Controller,
+  ForbiddenException,
   Get,
   Post,
   Req,
+  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -28,7 +31,7 @@ export class UserController {
   async initAdmin() {
     const admin = await this.userService.initAdmin();
     if (!admin) {
-      throw new BadRequestException('Failed to init admin');
+      throw new ConflictException('Failed to init admin, admin already exists');
     }
 
     return businessResponse('Init admin success');
@@ -38,7 +41,7 @@ export class UserController {
   async login(@Body() data: LoginDto) {
     const user = await this.userService.login(data);
     if (!user) {
-      throw new BadRequestException('Failed to login, invalid credentials');
+      throw new ForbiddenException('Failed to login, invalid credentials');
     }
 
     return businessResponse('Login success', 200, user);
@@ -48,9 +51,7 @@ export class UserController {
   async createUser(@Body() data: CreateUserDto) {
     const user = await this.userService.createUser(data);
     if (!user) {
-      throw new BadRequestException(
-        'Failed to create user, user already exists',
-      );
+      throw new ConflictException('Failed to create user, user already exists');
     }
 
     return businessResponse('Create user success', 201, {
@@ -73,8 +74,8 @@ export class UserController {
   async changePassword(@Body() data: ChangePasswordDto) {
     const user = await this.userService.changePassword(data);
     if (!user) {
-      throw new BadRequestException(
-        'Failed to change password, password not valid',
+      throw new ForbiddenException(
+        'Failed to change password, old password is incorrect',
       );
     }
 
@@ -86,7 +87,7 @@ export class UserController {
   @ApiBearerAuth()
   async setQuota(@Body() data: SetQuotaDto, @Req() req: any) {
     if (req.user.role !== Role.ADMIN) {
-      throw new BadRequestException('Only admin can set quota');
+      throw new UnauthorizedException('Only admin can set quota');
     }
 
     const user = await this.userService.setQuota(data);
